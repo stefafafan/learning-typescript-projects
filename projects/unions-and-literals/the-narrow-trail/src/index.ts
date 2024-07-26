@@ -1,30 +1,48 @@
+class Status {
+	constructor(
+		private availableResource: "Food" | "Water" | null = null,
+		private food: number = 5,
+		private water: number = 5
+	) {}
+	setAvailableResource(resource: "Food" | "Water"): void {
+		this.availableResource = resource;
+	}
+	isAlive(): boolean {
+		return this.food !== 0 && this.water !== 0;
+	}
+	consume(): void {
+		this.food--;
+		this.water--;
+	}
+	resupply(diceValue: number): void {
+		if (this.availableResource === "Food") {
+			this.food += diceValue;
+			this.availableResource = null;
+		} else if (this.availableResource === "Water") {
+			this.water += diceValue;
+			this.availableResource = null;
+		} else {
+			this.availableResource = diceValue % 2 == 0 ? "Food" : "Water";
+		}
+	}
+}
+
 export function runCommands() {
-	let availableResource: "Food" | "Water" | null = null;
-	let food = 5;
-	let water = 5;
+	let status = new Status();
 
 	for (let day = 1; day < 8; day++) {
-		let randomValue = Math.floor(6 * Math.random()) + 1;
-		if (randomValue === 1) {
-			availableResource = "Food";
+		let diceValue = Math.floor(6 * Math.random()) + 1;
+		if (diceValue === 1) {
+			status.setAvailableResource("Food");
 		}
-		if (randomValue === 2) {
-			availableResource = "Water";
+		if (diceValue === 2) {
+			status.setAvailableResource("Water");
 		}
-		if (randomValue >= 3) {
-			if (availableResource === "Food") {
-				food += randomValue;
-				availableResource = null;
-			} else if (availableResource === "Water") {
-				water += randomValue;
-				availableResource = null;
-			} else {
-				availableResource = randomValue % 2 == 0 ? "Food" : "Water";
-			}
+		if (diceValue >= 3) {
+			status.resupply(diceValue);
 		}
-		food--;
-		water--;
-		if (food === 0 || water === 0) {
+		status.consume();
+		if (!status.isAlive()) {
 			return false;
 		}
 	}
