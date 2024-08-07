@@ -1,4 +1,17 @@
-// Write your Bird type here! ✨
+type Diet = "omnivore" | "carnivore";
+
+type Bird = {
+	diet: Diet;
+	name: string;
+} & (
+	| {
+			dangerous?: boolean;
+			noisy: boolean;
+	  }
+	| {
+			intelligent: boolean;
+	  }
+);
 
 export const birds: Bird[] = [
 	{
