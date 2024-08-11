@@ -58,7 +58,6 @@ export function createKitchen(
 			const supplied = supplier(expense);
 			stock = increaseStock(stock, supplied);
 			currentBudget -= expense;
-			// stock = supplied;
 			return true;
 		},
 		prepare: (
