@@ -1,12 +1,12 @@
 type Type = "clearing" | "path" | "town" | "stream";
 type Area = "begin" | "middle" | "end";
 
-type Path = {
+type Basic = {
 	name: string;
 	proximity: number;
-	type: "path";
+	type: Type;
 	area?: Area;
-	through: Section;
+	through?: Section;
 	upstream?: Section;
 	downstream?: Section;
 	shortcut?: Section;
@@ -14,56 +14,34 @@ type Path = {
 	treasure?: string;
 };
 
-type BeginningStream = {
-	name: string;
-	proximity: number;
+type Path = Basic & {
+	type: "path";
+	through: Section;
+};
+
+type BeginningStream = Basic & {
 	type: "stream";
 	area: "begin";
-	through?: Section;
 	downstream: Section;
-	shortcut?: Section;
-	around?: Section;
-	treasure?: string;
 };
 
-type MiddleStream = {
-	name: string;
-	proximity: number;
+type MiddleStream = Basic & {
 	type: "stream";
 	area: "middle";
-	through?: Section;
 	upstream: Section;
 	downstream: Section;
-	shortcut?: Section;
-	around?: Section;
-	treasure?: string;
 };
 
-type EndStream = {
-	name: string;
-	proximity: number;
+type EndStream = Basic & {
 	type: "stream";
 	area: "end";
-	through?: Section;
 	upstream: Section;
-	shortcut?: Section;
-	around?: Section;
-	treasure?: string;
 };
 
 type Stream = BeginningStream | MiddleStream | EndStream;
 
-type OtherSection = {
-	name: string;
-	proximity: number;
+type OtherSection = Basic & {
 	type: Exclude<Type, "path" | "stream">;
-	area?: Area;
-	through?: Section;
-	upstream?: Section;
-	downstream?: Section;
-	shortcut?: Section;
-	around?: Section;
-	treasure?: string;
 };
 
 type Section = Path | Stream | OtherSection;
