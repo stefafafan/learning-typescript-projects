@@ -1,6 +1,74 @@
-// Write your types here! ✨
+type Type = "clearing" | "path" | "town" | "stream";
+type Area = "begin" | "middle" | "end";
 
-let current = {
+type Path = {
+	name: string;
+	proximity: number;
+	type: "path";
+	area?: Area;
+	through: Section;
+	upstream?: Section;
+	downstream?: Section;
+	shortcut?: Section;
+	around?: Section;
+	treasure?: string;
+};
+
+type BeginningStream = {
+	name: string;
+	proximity: number;
+	type: "stream";
+	area: "begin";
+	through?: Section;
+	downstream: Section;
+	shortcut?: Section;
+	around?: Section;
+	treasure?: string;
+};
+
+type MiddleStream = {
+	name: string;
+	proximity: number;
+	type: "stream";
+	area: "middle";
+	through?: Section;
+	upstream: Section;
+	downstream: Section;
+	shortcut?: Section;
+	around?: Section;
+	treasure?: string;
+};
+
+type EndStream = {
+	name: string;
+	proximity: number;
+	type: "stream";
+	area: "end";
+	through?: Section;
+	upstream: Section;
+	shortcut?: Section;
+	around?: Section;
+	treasure?: string;
+};
+
+type Stream = BeginningStream | MiddleStream | EndStream;
+
+type OtherSection = {
+	name: string;
+	proximity: number;
+	type: Exclude<Type, "path" | "stream">;
+	area?: Area;
+	through?: Section;
+	upstream?: Section;
+	downstream?: Section;
+	shortcut?: Section;
+	around?: Section;
+	treasure?: string;
+};
+
+type Section = Path | Stream | OtherSection;
+
+let current: Section | undefined = {
 	name: "Woesong Bridge",
 	proximity: 100,
 	through: {
