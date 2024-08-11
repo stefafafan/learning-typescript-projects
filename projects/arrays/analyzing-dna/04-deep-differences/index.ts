@@ -5,9 +5,6 @@ export function deepDifferences(
 	if (a.length !== b.length) {
 		return undefined;
 	}
-	if (a.length === 0) {
-		return [];
-	}
 
 	let allArray: ((string | undefined)[] | undefined)[] = [];
 	for (let i = 0; i < a.length; i++) {
